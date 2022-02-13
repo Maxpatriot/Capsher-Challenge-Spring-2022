@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
             child: const Text('Hi there!'),
             margin: const EdgeInsets.all(10),
             padding: const EdgeInsets.all(10),
-            color: Colors.red,
+            color: Colors.blue,
             width: 300,
           ),
         ),
