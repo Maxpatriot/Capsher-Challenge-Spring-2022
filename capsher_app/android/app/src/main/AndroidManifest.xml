@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.capsher_app">
    <application
-        android:label="capsher_app"
+        android:label="Capture Quest"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
