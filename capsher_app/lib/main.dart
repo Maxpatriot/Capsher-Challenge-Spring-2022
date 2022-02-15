@@ -35,16 +35,16 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: LeaderBoard(),
     ),
-    Text(
+    const Text(
       'Index 1: Quests',
       style: styleBigBold,
     ),
-    Text(
+    const Text(
       'Index 2: My Profile',
       style: styleBigBold,
     ),

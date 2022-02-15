@@ -2,31 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
 import 'themes.dart';
 
-class LeaderBoard extends StatefulWidget {
-  const LeaderBoard({Key? key}) : super(key: key);
-
-  @override
-  State<LeaderBoard> createState() => _LeaderBoardState();
+Future<List<Widget>> getLeaderList(PostgreSQLConnection c) async {
+  List<Widget> childs = [];
+  await c.open();
+  List<List<dynamic>> results =
+      await c.query("SELECT * FROM leaderboard LIMIT 10");
+  for (var user in results) {
+    childs.add(
+      Row(
+        children: [
+          Text(user[0]),
+          Text(user[1]),
+        ],
+      ),
+    );
+  }
+  await c.close();
+  return childs;
 }
 
-class _LeaderBoardState extends State<LeaderBoard> {
-
-  List<String> filters = ['Local', 'State', 'Nation'];
-  List<Widget> getFilterList() {
-    List<Widget> childs = [];
-    for (String filter in filters) {
-      childs.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: OutlinedButton(
-          onPressed: () {},
-          child: Text(
-            filter,
-            style: const TextStyle(color: colorDarkGray),
-          ),
+List<String> filters = ['Local', 'State', 'Nation'];
+List<Widget> getFilterList() {
+  List<Widget> childs = [];
+  for (String filter in filters) {
+    childs.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: OutlinedButton(
+        onPressed: () {},
+        child: Text(
+          filter,
+          style: const TextStyle(color: colorDarkGray),
         ),
-      ));
-    }
-    return childs;
+      ),
+    ));
+  }
+  return childs;
+}
+
+class LeaderBoard extends StatelessWidget {
+  LeaderBoard({Key? key}) : super(key: key);
+
+  final conn = PostgreSQLConnection('35.192.36.231', 5243, 'userdata',
+      username: 'postgres', password: 'deslxu5sudzgMpL0');
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -40,31 +66,39 @@ class _LeaderBoardState extends State<LeaderBoard> {
         backgroundColor: colorSecondary,
         actions: getFilterList(),
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverFixedExtentList(
-            itemExtent: 60.0,
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  alignment: Alignment.center,
-                  color: (index % 2 == 0) ? colorMidGray : colorLightGray,
-                  //color: Colors.cyan[100 * (index % 9)],
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.person),
-                      ),
-                      Text('User Number: $index'),
-                    ],
-                  ),
-                );
-              },
+      body: FutureBuilder(
+        future: getLeaderList(conn),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+              ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Text('${snapshot.data[index]}');
+                },
+              ),
+            ];
+          } else {
+            children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              )
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
