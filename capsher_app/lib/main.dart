@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'themes.dart';
+import 'leaderboard.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-const Color colorLightGray = Color(0xFF687996);
-const Color colorMidGray = Color(0xFF4C5270);
-const Color colorDarkGray = Color(0xFF222538);
-const Color colorPrimary = Color(0xFF2DC7CC);
-const Color colorSecondary = Color(0xFFF652A0);
-const Color colorAccent = Color(0xFF42A5F5);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -38,100 +35,32 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static final List<Widget> _widgetOptions = <Widget>[
+  static const List<Widget> _widgetOptions = <Widget>[
     Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Filters",
-            style: TextStyle(color: colorDarkGray),
-          ),
-          backgroundColor: colorSecondary,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: OutlinedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Local",
-                  style: TextStyle(color: colorDarkGray),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: OutlinedButton(
-                onPressed: () {},
-                child: const Text(
-                  "State",
-                  style: TextStyle(color: colorDarkGray),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: OutlinedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Nation",
-                  style: TextStyle(color: colorDarkGray),
-                ),
-              ),
-            ),
-          ],
-        ),
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverFixedExtentList(
-              itemExtent: 60.0,
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                    alignment: Alignment.center,
-                    color: (index % 2 == 0) ? colorMidGray : colorLightGray,
-                    //color: Colors.cyan[100 * (index % 9)],
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(Icons.person),
-                        ),
-                        Text('User Number: $index'),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      padding: EdgeInsets.only(left: 20, right: 20),
+      child: LeaderBoard(),
     ),
-    const Text(
+    Text(
       'Index 1: Quests',
-      style: optionStyle,
+      style: styleBigBold,
     ),
-    const Text(
+    Text(
       'Index 2: My Profile',
-      style: optionStyle,
+      style: styleBigBold,
     ),
   ];
   static const List<Widget> _titleOptions = <Widget>[
     Text(
       'LeaderBoard',
-      style: optionStyle,
+      style: styleBigBold,
     ),
     Text(
       'Index 1: Quests',
-      style: optionStyle,
+      style: styleBigBold,
     ),
     Text(
       'Index 2: My Profile',
-      style: optionStyle,
+      style: styleBigBold,
     ),
   ];
 
@@ -178,6 +107,86 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
+// class LeaderBoard extends StatefulWidget {
+//   const LeaderBoard({Key? key}) : super(key: key);
+
+//   @override
+//   State<LeaderBoard> createState() => _LeaderBoardState();
+// }
+
+// class _LeaderBoardState extends State<LeaderBoard> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text(
+//           "Filters",
+//           style: TextStyle(color: colorDarkGray),
+//         ),
+//         backgroundColor: colorSecondary,
+//         actions: [
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: OutlinedButton(
+//               onPressed: () {},
+//               child: const Text(
+//                 "Local",
+//                 style: TextStyle(color: colorDarkGray),
+//               ),
+//             ),
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: OutlinedButton(
+//               onPressed: () {},
+//               child: const Text(
+//                 "State",
+//                 style: TextStyle(color: colorDarkGray),
+//               ),
+//             ),
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: OutlinedButton(
+//               onPressed: () {},
+//               child: const Text(
+//                 "Nation",
+//                 style: TextStyle(color: colorDarkGray),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//       body: CustomScrollView(
+//         slivers: <Widget>[
+//           SliverFixedExtentList(
+//             itemExtent: 60.0,
+//             delegate: SliverChildBuilderDelegate(
+//               (BuildContext context, int index) {
+//                 return Container(
+//                   alignment: Alignment.center,
+//                   color: (index % 2 == 0) ? colorMidGray : colorLightGray,
+//                   //color: Colors.cyan[100 * (index % 9)],
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       const Padding(
+//                         padding: EdgeInsets.all(8.0),
+//                         child: Icon(Icons.person),
+//                       ),
+//                       Text('User Number: $index'),
+//                     ],
+//                   ),
+//                 );
+//               },
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
 
@@ -191,30 +200,3 @@ class _LogInPageState extends State<LogInPage> {
     return Container();
   }
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         appBar: AppBar(
-//           backgroundColor: primaryColor,
-//           title: const Text('Welcome to the app'),
-//           foregroundColor: neturalGray,
-//         ),
-//         body: Center(
-//           child: Container(
-//             child: const Text('Hi there!'),
-//             margin: const EdgeInsets.all(10),
-//             padding: const EdgeInsets.all(10),
-//             color: secondaryColor,
-//             width: 300,
-//           ),
-//         ),
-//         backgroundColor: neturalGray,
-//       ),
-//     );
-//   }
-// }
