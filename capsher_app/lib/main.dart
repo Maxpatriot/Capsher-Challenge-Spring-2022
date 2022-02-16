@@ -34,7 +34,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   static final List<Widget> _widgetOptions = <Widget>[
     Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
@@ -102,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
         onTap: _onItemTapped,
         backgroundColor: colorDarkGray,
       ),
-      backgroundColor: colorDarkGray,
+      backgroundColor: colorMidGray,
     );
   }
 }
